@@ -1,24 +1,43 @@
 module SimpleWarehouse
   ##
-  # Warehouse storage. Coordinates 0, 0 are top left
-  #  0 1 2 ..
-  #  1
+  # Warehouse storage. Coordinates 0, 0 are bottom left
+  #  height (y)
+  #  .
   #  2
-  #  .
-  #  .
+  #  1
+  #  0 1 2 . width (x)
   #
   #  The position 0,0 is valid
   class Warehouse
+
     def initialize(width, height)
       @width = width
       @height = height
       @crates = []
     end
 
-    def can_store?(position, crate)
+    def can_store?(to_store)
       # Doesn't go outbounds
-      # Doesn't overlap  
+      if to_store.min_x < 0 or to_store.min_y < 0 or
+        to_store.max_x >= @width or to_store.max_y >= @height then
+        return false
+      end
+      
+      not @crates.any? { |crate| crate.overlaps? to_store}
     end
+
+    def store!(x, y, crate)
+      position = Position.new(x, y)
+      to_store = StoredCrate.new(position, crate)
+      if can_store?(to_store) then
+        @crates.push(to_store)
+        true
+      else
+        false
+      end
+    end
+
+    private :can_store? 
   end
 
   class Position
@@ -48,20 +67,18 @@ module SimpleWarehouse
     end
 
     def overlaps?(other)
-      if self.max_x < other.min_x then 
+      if max_x < other.min_x then 
         false
-      elsif self.min_x > other.max_x then
+      elsif min_x > other.max_x then
         false
-      elsif self.max_y < other.min_y then
+      elsif max_y < other.min_y then
         false
-      elsif self.min_y > other.max_y then
+      elsif min_y > other.max_y then
         false
       else
         true
       end
     end
-
-    protected
 
     def min_x
       @position.x
