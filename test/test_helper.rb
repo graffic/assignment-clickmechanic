@@ -1,5 +1,4 @@
-require 'minitest'
-require 'minitest/spec'
-require "minitest/autorun"
+$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
+require "simple_warehouse"
 
-# You can write tests using either the original or spec style syntax.
+require "minitest/autorun"

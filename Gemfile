@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
-ruby '2.3.1'
+source "https://rubygems.org"
 
-gem 'minitest', '5.5.1'
+# Specify your gem's dependencies in simple_warehouse.gemspec
+gemspec
