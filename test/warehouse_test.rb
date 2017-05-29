@@ -39,7 +39,7 @@ end
 
 describe StoredCrate do
   let(:crate) { Crate.new(3, 3, "potatoes") }
-  let(:sut) { StoredCrate.new(Position.new(3, 3), crate) }
+  let(:sut) { StoredCrate.new(3, 3, crate) }
 
   describe "It does not overlap" do
     [
@@ -53,7 +53,7 @@ describe StoredCrate do
       [6, 6, "top right"]
     ].each do |x, y, desc|
       it "to the #{desc}" do
-        other = StoredCrate.new(Position.new(x, y), crate)
+        other = StoredCrate.new(x, y, crate)
         sut.overlaps?(other).must_equal false
       end
     end
@@ -72,7 +72,7 @@ describe StoredCrate do
       [5, 5, "top right"]
     ].each do |x, y, desc|
       it "to the #{desc}" do
-        other = StoredCrate.new(Position.new(x, y), crate)
+        other = StoredCrate.new(x, y, crate)
         sut.overlaps?(other).must_equal true
       end
     end

@@ -27,8 +27,7 @@ module SimpleWarehouse
     end
 
     def store!(x, y, crate)
-      position = Position.new(x, y)
-      to_store = StoredCrate.new(position, crate)
+      to_store = StoredCrate.new(x, y, crate)
       if can_store?(to_store) then
         @crates.push(to_store)
         true
@@ -38,15 +37,6 @@ module SimpleWarehouse
     end
 
     private :can_store? 
-  end
-
-  class Position
-    attr_reader :x, :y
-
-    def initialize(x, y)
-      @x = x
-      @y = y
-    end
   end
 
   class Crate
@@ -60,9 +50,11 @@ module SimpleWarehouse
   end
 
   class StoredCrate
+    attr_reader :min_x, :min_y
 
-    def initialize(position, crate)
-      @position = position
+    def initialize(x, y, crate)
+      @min_x = x
+      @min_y = y
       @crate = crate
     end
 
@@ -80,16 +72,8 @@ module SimpleWarehouse
       end
     end
 
-    def min_x
-      @position.x
-    end
-
     def max_x
       min_x + @crate.width - 1
-    end
-
-    def min_y
-      @position.y
     end
 
     def max_y
