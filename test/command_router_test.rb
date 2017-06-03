@@ -13,7 +13,7 @@ describe CommandRouter do
       def action(context, one, two)
         @context = context
         @arguments = [one, two]
-        "cool"
+        [:ok, "cool"]
       end
 
       def status

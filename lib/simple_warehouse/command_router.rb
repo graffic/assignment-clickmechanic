@@ -1,5 +1,7 @@
 module SimpleWarehouse
   class CommandRouter
+    attr_accessor :commands
+
     def initialize
       @commands = {}
     end
@@ -21,8 +23,7 @@ module SimpleWarehouse
         return :wrong_arguments, nil
       end
 
-      output = command.action(context, *arguments)
-      return :ok, output
+      command.action(context, *arguments)
     end
   end
 end
