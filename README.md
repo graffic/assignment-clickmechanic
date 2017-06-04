@@ -5,26 +5,33 @@ In memory warehouse code assignment for ClickMechanic.com
 
 ## Installation
 
-Add this line to your application's Gemfile:
+So you just cloned this repository. Assuming a *development* installation.
 
-```ruby
-gem 'simple_warehouse'
-```
+* Go to the directory where this file is.
+* `bundle install` (You will need bundler installed)
+* Run tests `rake test`
+* Run the cli `bundle exec warehouse`
 
-And then execute:
+## Development notes
 
-    $ bundle
+The application is divided in 3 parts:
 
-Or install it yourself as:
+* The CLI
+* The command system with commands
+* The in memory warehouse
 
-    $ gem install simple_warehouse
+The idea was to have only one layer dealing with real input/output and leave the rest to work with strings. After that, many commands share the same repetitive code, so the `CommandRouter` encapsulates all the common logic behind commands.
 
-## Usage
+Each command has access to the command router and the warehouse and they return a status symbol and some output. The status symbol is used to break the loop, and any string returned will be shown. The base command has access to filtering and argument extraction using regular expressions, like url matches in a webframework.
 
-TODO: Write usage instructions here
+The last part is the in memory warehouse with the `Crate` and the `StoredCrate`.
 
-## Development
+### Things to improve
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+Let's start from the `Warehouse`. It has some abstractions for `Crate` and `StoredCrate` that might not be needed. In the end those abstractions might do things a bit more verbose. 
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+The `Warehouse` doesn't use any index when finding products, nor it keeps a ready bit-map of free space. If the warehouse was to be big, this would slow things down.
+
+Commands gather and prepare data to be shown. They need to know what symbols to return for the cli to work or exit, so they're not fully abstracted. Argument parsing could be better but I guess it will make things more complex.
+
+The `CLI` itself could be better unit tested. In the end I focused more in the end to end test that runs a script.
