@@ -20,7 +20,7 @@ module SimpleWarehouse
       end
 
       if not command.match arguments.join(' ')
-        return :wrong_arguments, nil
+        return :wrong_arguments, command.full_command
       end
 
       command.action(context, *arguments)
