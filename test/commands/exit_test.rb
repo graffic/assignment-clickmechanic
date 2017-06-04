@@ -1,5 +1,5 @@
+require 'test_helper'
 require 'simple_warehouse/commands/exit'
-require 'minitest/spec'
 
 include SimpleWarehouse::Commands
 

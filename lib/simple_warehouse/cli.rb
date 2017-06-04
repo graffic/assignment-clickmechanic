@@ -8,6 +8,11 @@ module SimpleWarehouse
     def initialize
       @router = CommandRouter.new
       @router.add SimpleWarehouse::Commands::Help.new
+      @router.add SimpleWarehouse::Commands::Init.new
+      @router.add SimpleWarehouse::Commands::Store.new
+      @router.add SimpleWarehouse::Commands::Locate.new
+      @router.add SimpleWarehouse::Commands::Remove.new
+      @router.add SimpleWarehouse::Commands::View.new
       @router.add SimpleWarehouse::Commands::Exit.new
       @context = Context.new @router, nil
     end

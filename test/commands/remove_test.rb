@@ -1,6 +1,6 @@
+require 'test_helper'
 require 'simple_warehouse/commands/remove'
 require 'simple_warehouse/cli'
-require 'minitest/spec'
 
 include SimpleWarehouse::Commands
 
@@ -20,7 +20,7 @@ describe Remove do
         true
       end
 
-      cmd.action(context, 1, 2).must_equal [:ok, "Removed!"]
+      cmd.action(context, "1", "2").must_equal [:ok, "Removed!"]
     end
 
     it "returns error if a problem arises" do
@@ -28,12 +28,12 @@ describe Remove do
         false
       end
 
-      cmd.action(context, 1, 2).must_equal [:error, "Couldn't remove crate at (1, 2)"]
+      cmd.action(context, "1", "2").must_equal [:error, "Couldn't remove crate at (1, 2)"]
     end
 
     it "removes the right position" do
       warehouse.expect(:remove, true, [1, 2])
-      cmd.action(context, 1, 2)
+      cmd.action(context, "1", "2")
       warehouse.verify
     end
   end

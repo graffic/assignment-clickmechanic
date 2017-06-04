@@ -19,7 +19,9 @@ module SimpleWarehouse
         return :not_found, nil
       end
 
-      if not command.match arguments.join(' ')
+      parameters = command.extract arguments.join(' ')
+
+      if parameters == :no_match
         return :wrong_arguments, command.full_command
       end
 

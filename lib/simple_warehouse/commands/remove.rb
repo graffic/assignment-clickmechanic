@@ -9,7 +9,7 @@ module SimpleWarehouse::Commands
     end
 
     def action(context, x, y)
-      removed = context.warehouse.remove x, y
+      removed = context.warehouse.remove x.to_i, y.to_i
       if removed
         [:ok, "Removed!"]
       else

@@ -40,15 +40,33 @@ module SimpleWarehouse
     def find(product)
       @crates
         .select {|c| c.crate.product == product}
-        .collect {|c| [c.min_x, c.min_y, c.crate]}
+        .reduce([]) {|acc, c| acc + c.fill_coordinates}
     end
 
+    ##
+    # Removes the crate at position x, y. The position doesn't need to be the
+    # initial position
     def remove(x, y)
       removed = @crates.reject! {|sc| x >= sc.min_x &&
                                    x <= sc.max_x &&
                                    y >= sc.min_y &&
                                    y <= sc.max_y }
       !removed.nil?
+    end
+
+    ##
+    # Creates a matrix with indicators for :empty and :filled spaces
+    # in the warehouse. 
+    def space
+      canvas = (1..@height).to_a.collect {|_| [:empty] * @width}
+      @crates.each do |sc|
+        range_y = (sc.min_y..sc.max_y)
+        range_x = (sc.min_x..sc.max_x)
+        sc.fill_coordinates.each do |x, y|
+          canvas[y][x] = :filled
+        end
+      end
+      canvas
     end
 
     private :can_store? 
@@ -71,6 +89,10 @@ module SimpleWarehouse
       @min_x = x
       @min_y = y
       @crate = crate
+    end
+
+    def fill_coordinates
+      (@min_x..max_x).to_a.product((@min_y..max_y).to_a)
     end
 
     def overlaps?(other)

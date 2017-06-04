@@ -1,7 +1,7 @@
+require 'test_helper'
 require 'simple_warehouse/commands/init'
 require 'simple_warehouse/cli'
 require 'simple_warehouse/warehouse'
-require 'minitest/spec'
 
 include SimpleWarehouse::Commands
 

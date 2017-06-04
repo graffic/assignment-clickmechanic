@@ -1,4 +1,5 @@
-$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
-require "simple_warehouse"
+require 'simplecov'
+SimpleCov.start 'test_frameworks'
 
 require "minitest/autorun"
+require "minitest/spec"

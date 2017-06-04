@@ -1,5 +1,5 @@
+require 'test_helper'
 require 'simple_warehouse/warehouse'
-require 'minitest/spec'
 
 include SimpleWarehouse
 
@@ -48,8 +48,14 @@ describe Warehouse do
     warehouse.store(3, 3, crate)
 
     warehouse.find("potatoes").must_equal [
-      [0, 0, crate],
-      [3, 3, crate]
+      [0, 0],
+      [0, 1],
+      [1, 0],
+      [1, 1],
+      [3, 3],
+      [3, 4],
+      [4, 3],
+      [4, 4]
     ]
   end
 
@@ -70,6 +76,21 @@ describe Warehouse do
 
       warehouse.remove(x, y).must_equal expected
     end
+  end
+
+  it "Creates a spaces matrix" do
+    other = Crate.new(1, 1, "other")
+    warehouse.store(0, 0, crate)
+    warehouse.store(2, 2, other)
+    warehouse.store(3, 3, crate)
+
+    warehouse.space.must_equal [
+      [:filled, :filled, :empty,  :empty,  :empty],
+      [:filled, :filled, :empty,  :empty,  :empty],
+      [:empty,  :empty,  :filled, :empty,  :empty],
+      [:empty,  :empty,  :empty,  :filled, :filled],
+      [:empty,  :empty,  :empty,  :filled, :filled]
+    ]
   end
 
 end
@@ -113,6 +134,20 @@ describe StoredCrate do
         sut.overlaps?(other).must_equal true
       end
     end
+  end
+
+  it "produces coordinates of filled space" do
+    sut.fill_coordinates.must_equal [
+      [3, 3],
+      [3, 4],
+      [3, 5],
+      [4, 3],
+      [4, 4],
+      [4, 5],
+      [5, 3],
+      [5, 4],
+      [5, 5]
+    ]
   end
 end
 

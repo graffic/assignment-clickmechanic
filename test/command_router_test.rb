@@ -1,5 +1,6 @@
+require 'test_helper'
 require 'simple_warehouse/command_router'
-require 'minitest/spec'
+require 'simple_warehouse/commands/base'
 
 include SimpleWarehouse
 
@@ -7,10 +8,11 @@ describe CommandRouter do
   let(:router) { CommandRouter.new }
   let(:cmd) { DummyCmd.new }
 
-  class DummyCmd
-    def command
-      "potato"
+  class DummyCmd < SimpleWarehouse::Commands::Base
+    def initialize
+      super("potato rules", "", /^([^\s]+)\s([^\s]+)$/)
     end
+
     def action(context, one, two)
       @context = context
       @arguments = [one, two]
@@ -19,10 +21,6 @@ describe CommandRouter do
 
     def status
       [@context, @arguments]
-    end
-
-    def match(arguments)
-      /^[^\s]+\s+[^\s]+$/ =~ arguments
     end
 
     def full_command

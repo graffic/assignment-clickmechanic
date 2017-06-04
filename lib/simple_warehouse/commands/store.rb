@@ -5,7 +5,7 @@ module SimpleWarehouse::Commands
     def initialize
       super("store X Y W H P",
             "Stores a crate of product number P and of size W x H at position X,Y.",
-            /^([1-9][0-9]*)\s([1-9][0-9]*)\s([1-9][0-9]*)\s([1-9][0-9]*)\s(..*)$/)
+            /^([1-9][0-9]*)\s([1-9][0-9]*)\s([1-9][0-9]*)\s([1-9][0-9]*)\s(.+)$/)
     end
 
     def action(context, x, y, width, height, product)

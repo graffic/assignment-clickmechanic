@@ -1,7 +1,7 @@
+require 'test_helper'
 require 'simple_warehouse/commands/store'
 require 'simple_warehouse/warehouse'
 require 'simple_warehouse/cli'
-require 'minitest/spec'
 
 include SimpleWarehouse::Commands
 
@@ -10,6 +10,10 @@ describe Store do
 
   it "has the command store" do
     cmd.command.must_equal "store"
+  end
+
+  it "Matches X Y W H P parameters"  do
+    cmd.extract("1 2 3 4 My house").must_equal ["1", "2", "3", "4", "My house"]
   end
 
   describe "action" do
