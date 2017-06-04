@@ -25,7 +25,7 @@ module SimpleWarehouse
         return :wrong_arguments, command.full_command
       end
 
-      command.action(context, *arguments)
+      command.action(context, *parameters)
     end
   end
 end

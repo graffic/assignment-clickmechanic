@@ -12,8 +12,14 @@ describe Store do
     cmd.command.must_equal "store"
   end
 
-  it "Matches X Y W H P parameters"  do
-    cmd.extract("1 2 3 4 My house").must_equal ["1", "2", "3", "4", "My house"]
+  describe "parameters" do
+    it "Matches X Y W H P parameters"  do
+      cmd.extract("1 2 3 4 My house").must_equal ["1", "2", "3", "4", "My house"]
+    end
+
+    it "X Y can be zero" do
+      cmd.extract("0 0 3 4 My house").must_equal ["0", "0", "3", "4", "My house"]
+    end
   end
 
   describe "action" do

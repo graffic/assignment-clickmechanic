@@ -4,10 +4,15 @@ require 'simple_warehouse/cli'
 include SimpleWarehouse
 
 describe CLI do
-  it "exits" do
-    #cli = CLI.new
-    #cli.stub :gets, "exit\n" do
-    #  cli.run
-    #end
+  describe "run" do
+    it "Nil in gets exits" do
+      cli = CLI.new
+      def cli.puts(x); end
+      def cli.print(x); end
+
+      cli.stub :gets, nil do
+        cli.run
+      end
+    end
   end
 end
