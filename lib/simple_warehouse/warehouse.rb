@@ -9,6 +9,7 @@ module SimpleWarehouse
   #
   #  The position 0,0 is valid
   class Warehouse
+    attr_accessor :width, :height
 
     def initialize(width, height)
       @width = width
@@ -26,7 +27,7 @@ module SimpleWarehouse
       not @crates.any? { |crate| crate.overlaps? to_store}
     end
 
-    def store!(x, y, crate)
+    def store(x, y, crate)
       to_store = StoredCrate.new(x, y, crate)
       if can_store?(to_store) then
         @crates.push(to_store)
@@ -34,6 +35,20 @@ module SimpleWarehouse
       else
         false
       end
+    end
+
+    def find(product)
+      @crates
+        .select {|c| c.crate.product == product}
+        .collect {|c| [c.min_x, c.min_y, c.crate]}
+    end
+
+    def remove(x, y)
+      removed = @crates.reject! {|sc| x >= sc.min_x &&
+                                   x <= sc.max_x &&
+                                   y >= sc.min_y &&
+                                   y <= sc.max_y }
+      !removed.nil?
     end
 
     private :can_store? 
@@ -50,7 +65,7 @@ module SimpleWarehouse
   end
 
   class StoredCrate
-    attr_reader :min_x, :min_y
+    attr_reader :min_x, :min_y, :crate
 
     def initialize(x, y, crate)
       @min_x = x

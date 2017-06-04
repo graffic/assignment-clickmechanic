@@ -16,7 +16,7 @@ describe Warehouse do
     [0, 5, "top"]
   ].each do |x, y, desc|
     it "cannot store ouside limits #{desc}" do
-      warehouse.store!(x, y, crate).must_equal false
+      warehouse.store(x, y, crate).must_equal false
     end
   end
 
@@ -31,10 +31,47 @@ describe Warehouse do
     [3, 3, "top right"]
   ].each do |x, y, desc|
     it "cannot store if overlaps #{desc}" do
-      warehouse.store!(1, 1, Crate.new(3, 3, "potatoes"))
-      warehouse.store!(x, y, crate).must_equal false
+      warehouse.store(1, 1, Crate.new(3, 3, "potatoes"))
+      warehouse.store(x, y, crate).must_equal false
     end
   end
+
+  it "Finds crates by product" do
+    other = Crate.new(1, 1, "other")
+
+    (0..4).each do |pos|
+      warehouse.store(pos, 2, other)
+      warehouse.store(2, pos, other)
+    end
+
+    warehouse.store(0, 0, crate)
+    warehouse.store(3, 3, crate)
+
+    warehouse.find("potatoes").must_equal [
+      [0, 0, crate],
+      [3, 3, crate]
+    ]
+  end
+
+  [
+    [0, 0, true],
+    [0, 1, true],
+    [0, 2, false],
+    [2, 2, true],
+    [4, 4, true],
+    [0, 5, false],
+    [5, 0, false]
+  ].each do |x, y, expected|
+    it "#{expected ? "Does":"Doesn't"} remove at #{x} #{y}" do
+      other = Crate.new(1, 1, "other")
+      warehouse.store(0, 0, crate)
+      warehouse.store(2, 2, other)
+      warehouse.store(3, 3, crate)
+
+      warehouse.remove(x, y).must_equal expected
+    end
+  end
+
 end
 
 describe StoredCrate do
