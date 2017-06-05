@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/graffic/assignment-clickmechanic.svg?branch=master)](https://travis-ci.org/graffic/assignment-clickmechanic)
+[![Build Status](https://travis-ci.org/graffic/assignment-clickmechanic.svg?branch=master)](https://travis-ci.org/graffic/assignment-clickmechanic) [![Coverage Status](https://coveralls.io/repos/github/graffic/assignment-clickmechanic/badge.svg?branch=master)](https://coveralls.io/github/graffic/assignment-clickmechanic?branch=master)
 
 # SimpleWarehouse
 
