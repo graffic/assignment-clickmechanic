@@ -37,3 +37,5 @@ Commands gather and prepare data to be shown. They need to know what symbols to 
 The view command output could be better with a legend and perhaps some info about the products.
 
 The `CLI` itself could be better unit tested. In the end I focused more in the end to end test that runs a script.
+
+Code style is not very homogeneous. You will see that with return values (explicit/implicit array), and method calls. Some more rdoc would not hurt.
