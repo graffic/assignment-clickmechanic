@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/graffic/assignment-clickmechanic.svg?branch=master)](https://travis-ci.org/graffic/assignment-clickmechanic)
+
 # SimpleWarehouse
 
 In memory warehouse technical assignment for ClickMechanic.com
