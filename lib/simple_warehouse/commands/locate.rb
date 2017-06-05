@@ -9,6 +9,10 @@ module SimpleWarehouse::Commands
     end
 
     def action(context, product)
+      if context.warehouse.nil?
+        return [:error, "No warehouse initialized"]
+      end
+
       coords = context.warehouse.find(product).collect do |x, y|
         "  - (#{x}, #{y})"
       end

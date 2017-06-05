@@ -9,6 +9,10 @@ module SimpleWarehouse::Commands
     end
 
     def action(context, x, y, width, height, product)
+      if context.warehouse.nil?
+        return :error, "No warehouse initialized"
+      end
+
       crate = SimpleWarehouse::Crate.new width.to_i, height.to_i, product
       stored = context.warehouse.store x.to_i, y.to_i, crate
       if stored

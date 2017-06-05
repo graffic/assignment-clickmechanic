@@ -15,6 +15,17 @@ describe Remove do
     let(:warehouse) { MiniTest::Mock.new }
     let(:context) { SimpleWarehouse::Context.new nil, warehouse}
 
+    before do
+      def warehouse.nil?
+        false
+      end
+    end
+
+    it "checks for missing warehouse" do
+      context.warehouse = nil
+      cmd.action(context, "1", "2").must_equal [:error, "No warehouse initialized"]
+    end
+
     it "returns ok if removed" do
       def warehouse.remove(*any)
         true

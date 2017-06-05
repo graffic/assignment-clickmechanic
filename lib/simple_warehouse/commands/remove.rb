@@ -9,6 +9,10 @@ module SimpleWarehouse::Commands
     end
 
     def action(context, x, y)
+      if context.warehouse.nil?
+        return [:error, "No warehouse initialized"]
+      end
+
       removed = context.warehouse.remove x.to_i, y.to_i
       if removed
         [:ok, "Removed!"]

@@ -26,6 +26,18 @@ describe Store do
     let (:warehouse) { MiniTest::Mock.new }
     let (:context) { SimpleWarehouse::Context.new nil, warehouse }
 
+    before do
+      def warehouse.nil?
+        false
+      end
+    end
+
+    it "checks for non initialized warehouse" do
+      context.warehouse = nil
+      cmd.action(context, 1, 2, 3, 4, "Test a").must_equal [
+        :error, "No warehouse initialized"]
+    end
+
     it "returns ok when stored" do
       def warehouse.store(*any)
         true

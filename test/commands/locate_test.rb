@@ -25,6 +25,11 @@ describe Locate do
     let(:warehouse) { Object.new }
     let(:context) { SimpleWarehouse::Context.new nil, warehouse }
 
+    it "When there is no warehouse, show error message" do
+      context.warehouse = nil
+      cmd.action(context, "potato").must_equal [:error, "No warehouse initialized"]
+    end
+
     it "Says product not found if not found" do
       def warehouse.find(product)
         []
